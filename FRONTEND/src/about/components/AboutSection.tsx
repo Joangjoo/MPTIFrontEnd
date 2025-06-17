@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 
 const AboutSection: React.FC = () => {
     return (
-        <section className="bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <section className="bg-gradient-to-r from-[#FFFDF6] to-[#F5F7F8]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-16 px-4 md:px-10 max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -27,7 +27,7 @@ const AboutSection: React.FC = () => {
                     viewport={{ once: true }}
                     className='text-white'
                 >
-                    <p className="text-2xl md:text-3xl font-semibold mb-4">
+                    <p className="text-2xl md:text-3xl font-semibold mb-4 text-black">
                         <motion.span
                             className="inline-block border-b-2 border-orange-500 pb-1"
                             initial={{ scaleX: 0 }}
@@ -40,7 +40,7 @@ const AboutSection: React.FC = () => {
                         <span> Kami</span>
                     </p>
 
-                    <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+                    <h2 className='text-3xl md:text-4xl font-bold mb-6 text-black'>
                         <motion.span
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
@@ -61,7 +61,7 @@ const AboutSection: React.FC = () => {
                     </h2>
 
                     <motion.p
-                        className="text-lg md:text-xl leading-relaxed max-w-lg text-gray-300"
+                        className="text-lg md:text-xl leading-relaxed max-w-lg text-black"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.8 }}
@@ -77,10 +77,10 @@ const AboutSection: React.FC = () => {
                         viewport={{ once: true }}
                         className="flex gap-4 mt-8"
                     >
-                        <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md transition-colors duration-300 shadow-lg hover:shadow-orange-500/20">
+                        <button className="px-6 py-3 bg-[#1A1A19] hover:bg-[#3F3F44] text-white font-medium rounded-md transition-colors duration-300 shadow-lg hover:shadow-orange-500/20">
                             Hubungi Kami
                         </button>
-                        <button className="px-6 py-3 border border-orange-500 text-orange-500 hover:bg-orange-500/10 font-medium rounded-md transition-colors duration-300">
+                        <button className="px-6 py-3 border border-[#1A1A19] text-black hover:text-white hover:bg-[#3F3F44] font-medium rounded-md transition-colors duration-300">
                             Lihat Produk
                         </button>
                     </motion.div>

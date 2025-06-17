@@ -1,3 +1,4 @@
+// src/common/components/Navbar.tsx
 "use client";
 import { cn } from "../../lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
@@ -6,13 +7,19 @@ import {
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
-} from "framer-motion"; 
+} from "framer-motion";
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
+// IMPORT ShoppingCartIcon
+import ShoppingCartIcon from '../../produk/components/ShoppingCartIcon'; // <--- PASTIKAN PATH INI BENAR!
+// Import type Variants
+
+// ===============================================================
+// DEFINISI INTERFACE (TIDAK ADA PERUBAHAN BESAR PADA INTERFACE)
+// ===============================================================
 interface NavbarProps {
-  children: React.ReactNode;
-  className?: string;
+  className?: string; // Hapus children di sini, Navbar akan render isinya sendiri
 }
 
 interface NavBodyProps {
@@ -47,13 +54,20 @@ interface MobileNavMenuProps {
   isOpen: boolean;
 }
 
-export const Navbar = ({ children, className }: NavbarProps) => {
+
+// ===============================================================
+// KOMPONEN-KOMPONEN EKSPOR (TETAP SAMA, KECUALI YANG UTAMA)
+// ===============================================================
+// Ini adalah komponen Navbar UTAMA yang akan diekspor default atau named export
+// Dan akan merender semua komponen internalnya seperti NavBody, MobileNav, dll.
+export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari props Navbar
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
   const [visible, setVisible] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // <--- DEKLARASI STATE DI SINI
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
@@ -63,23 +77,86 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     }
   });
 
+  // State untuk menghitung item di keranjang (simulasi)
+  const [cartItemCount] = useState(0); // <--- DEKLARASI STATE KERANJANG DI SINI
+
+  // Fungsi untuk menambah item (contoh, bisa dipanggil dari ProductDetailPage nanti)
+
+
+  // Anda bisa menambahkan useEffect untuk global state management jika diperlukan
+  // Misalnya: React.useEffect(() => { /* subscribe to cart store */ }, []);
+
   return (
     <motion.div
       ref={ref}
       className={cn("fixed inset-x-0 top-0 z-40 w-full", className)}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-            child as React.ReactElement<{ visible?: boolean }>,
-            { visible }
-          )
-          : child
-      )}
+      {/* Desktop Navbar */}
+      <NavBody visible={visible} className="px-10">
+        <span className="text-blue-600 font-bold text-lg">TriJaya Agung</span>
+        <NavItems
+          items={[
+            { name: "Beranda", link: "/" },
+            { name: "Tentang Kami", link: "/about" },
+            { name: "Produk", link: "/products" },
+          ]}
+        />
+        <div className="ml-auto flex items-center gap-4">
+          {/* ShoppingCartIcon menggunakan cartItemCount dari state internal Navbar */}
+          <ShoppingCartIcon itemCount={cartItemCount} />
+          <NavbarButton href="#" variant="text">
+            Hubungi Kami
+          </NavbarButton>
+        </div>
+      </NavBody>
+
+      {/* Mobile Navbar */}
+      <MobileNav visible={visible}>
+        <MobileNavHeader>
+          <NavbarLogo />
+          <div className="flex items-center gap-4">
+            {/* ShoppingCartIcon menggunakan cartItemCount dari state internal Navbar */}
+            <ShoppingCartIcon itemCount={cartItemCount} />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </div>
+        </MobileNavHeader>
+
+        <MobileNavMenu isOpen={isMobileMenuOpen}>
+          {[
+            { name: "Beranda", link: "/" },
+            { name: "Tentang Kami", link: "/about" },
+            { name: "Produk", link: "/products" },
+          ].map((item, index) => (
+            <Link
+              key={index}
+              to={item.link}
+              className="w-full px-4 py-3 text-black dark:text-white"
+              onClick={() => setIsMobileMenuOpen(false)} // Tutup menu saat klik
+            >
+              {item.name}
+            </Link>
+          ))}
+          <NavbarButton
+            href="#"
+            className="w-full mt-4 font-bold"
+            variant="text"
+            onClick={() => setIsMobileMenuOpen(false)} // Tutup menu saat klik
+          >
+            Hubungi Kami
+          </NavbarButton>
+        </MobileNavMenu>
+      </MobileNav>
     </motion.div>
   );
 };
 
+// ===============================================================
+// KOMPONEN-KOMPONEN EKSPOR LAINNYA (TETAP SAMA)
+// ===============================================================
+// Pastikan semua komponen ini juga di-export
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   return (
     <motion.div
@@ -88,7 +165,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "90%" : "100%", // Diubah dari 40% ke 90% untuk mobile
+        width: visible ? "90%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -97,7 +174,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         damping: 50,
       }}
       style={{
-        minWidth: "auto", 
+        minWidth: "auto",
       }}
       className={cn(
         "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-white px-4 py-2 lg:flex dark:bg-white backdrop-blur-md",
@@ -183,7 +260,7 @@ export const MobileNavHeader = ({
   return (
     <div
       className={cn(
-        "flex w-full flex-row items-center justify-between px-4", // Ditambahkan padding untuk mobile
+        "flex w-full flex-row items-center justify-between px-4",
         className
       )}
     >
@@ -227,13 +304,13 @@ export const MobileNavToggle = ({
     <IconX
       className="text-black dark:text-white"
       onClick={onClick}
-      size={24} 
+      size={24}
     />
   ) : (
     <IconMenu2
       className="text-black dark:text-white"
       onClick={onClick}
-      size={24} 
+      size={24}
     />
   );
 };
