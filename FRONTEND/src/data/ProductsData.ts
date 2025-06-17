@@ -6,7 +6,7 @@ export const products = [
         name: 'Semen Portland Komposit',
         description: 'Semen berkualitas tinggi untuk semua jenis konstruksi, daya rekat kuat dan hasil halus. Cocok untuk pondasi, plester, dan acian.',
         price: 'Rp 55.000',
-        image: '/gambar1.jpg',
+        image: '/semen.png',
         category: 'Semen',
         details: 'Berat: 50kg, Standar: SNI, Keunggulan: Cepat kering, tahan retak'
     },

@@ -27,7 +27,7 @@ const HeroSection: React.FC = () => (
         <br />
         Dengan Kualitas Terjamin Dan Harga Kompetitif."
       </p>
-      <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition flex items-center gap-2">
+      <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition flex items-center gap-2">
         View All Products <span className="text-xl">→</span>
       </button>
     </div>

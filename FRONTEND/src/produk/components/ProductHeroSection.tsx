@@ -25,7 +25,7 @@ const ProductHeroSection: React.FC = () => (
                 className="text-center"
             >
                 <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
-                    Temukan <span className="text-orange-500">Material Terbaik</span>
+                    Temukan <span className="text-blue-500">Material Terbaik</span>
                     <br />untuk Proyek Anda
                 </h1>
 
@@ -47,7 +47,7 @@ const ProductHeroSection: React.FC = () => (
                 >
                     <Link
                         to="/products" 
-                        className="px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-600 transition-colors duration-300"
+                        className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 transition-colors duration-300"
                     >
                         Lihat Semua Produk
                     </Link>
@@ -61,7 +61,7 @@ const ProductHeroSection: React.FC = () => (
             </motion.div>
 
             <motion.div
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 w-full max-w-4xl"
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 w-full max-w-4xl mb-24"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2, duration: 0.8 }}

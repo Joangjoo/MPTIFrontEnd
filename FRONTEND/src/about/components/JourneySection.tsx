@@ -14,15 +14,15 @@ const JourneySection: React.FC = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        <span className="text-orange-500">Perjalanan</span> Kami
+                        <span className="text-blue-500">Perjalanan</span> Kami
                     </h2>
-                    <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+                    <div className="w-20 h-1 bg-blue-500 mx-auto mb-6"></div>
                     <p className="text-lg text-gray-300 max-w-3xl mx-auto">
                         Dari toko lokal hingga menjadi penyedia distribusi berskala luas, inilah sejarah perjalanan kami.
                     </p>
                 </motion.div>
                 <div className="relative">
-                    <div className="hidden md:block absolute left-1/2 h-full w-0.5 bg-orange-500/30 transform -translate-x-1/2"></div>
+                    <div className="hidden md:block absolute left-1/2 h-full w-0.5 bg-blue-500/30 transform -translate-x-1/2"></div>
                     <div className="space-y-12 md:space-y-0">
                         {[
                             {
@@ -58,11 +58,11 @@ const JourneySection: React.FC = () => {
                                 viewport={{ once: true }}
                                 className={`relative flex flex-col md:flex-row items-center ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                             >
-                                <div className="md:absolute left-1/2 transform -translate-x-1/2 w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl z-10 mb-4 md:mb-0">
+                                <div className="md:absolute left-1/2 transform -translate-x-1/2 w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl z-10 mb-4 md:mb-0">
                                     {item.year}
                                 </div>
                                 <div className={`md:w-5/12 ${index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                                    <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-gray-700 hover:border-orange-500 transition-all duration-300">
+                                    <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-gray-700 hover:border-blue-500 transition-all duration-300">
                                         <div className="text-3xl mb-2">{item.icon}</div>
                                         <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
                                         <p className="text-gray-300">{item.description}</p>

@@ -36,9 +36,9 @@ const VisiMisiSection: React.FC = () => {
                         variants={sectionVariants}
                     >
                         <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold text-black mb-4">
-                            Visi & <span className="text-orange-500">Misi</span> Kami
+                            Visi & <span className="text-blue-500">Misi</span> Kami
                         </motion.h2>
-                        <motion.div variants={itemVariants} className="w-24 h-1 bg-orange-500 mx-auto mb-6"></motion.div>
+                        <motion.div variants={itemVariants} className="w-24 h-1 bg-blue-500 mx-auto mb-6"></motion.div>
                         <motion.p variants={itemVariants} className="text-lg text-gray-700 max-w-2xl mx-auto"> {/* Ubah text-black ke text-gray-700 untuk kelembutan */}
                             Fondasi kuat yang menggerakkan setiap langkah kami dalam menyediakan material bangunan terbaik dan terpercaya.
                         </motion.p>
@@ -54,10 +54,10 @@ const VisiMisiSection: React.FC = () => {
                     >
                         {/* Area untuk "gambar" visi, diganti dengan elemen non-gambar */}
                         <motion.div variants={itemVariants} className="md:order-2 flex items-center justify-center p-8 bg-white rounded-lg shadow-xl border border-gray-200"> {/* Ubah bg dan border */}
-                            <IconRocket size={120} className="text-orange-500" />
+                            <IconRocket size={120} className="text-blue-500" />
                         </motion.div>
                         <motion.div variants={itemVariants} className="text-black md:order-1"> {/* Ubah text-white ke text-black */}
-                            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-orange-500">
+                            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-blue-500">
                                 Visi
                             </h3>
                             <p className="text-lg md:text-xl leading-relaxed text-gray-700"> {/* Ubah text-gray-300 ke text-gray-700 */}
@@ -65,15 +65,15 @@ const VisiMisiSection: React.FC = () => {
                             </p>
                             <div className="mt-6 flex flex-col gap-3">
                                 <motion.div variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">✓</span>
+                                    <span className="text-blue-500 text-2xl">✓</span>
                                     <p className="text-gray-700">Kualitas produk yang tak tertandingi.</p> {/* Ubah text-gray-200 ke text-gray-700 */}
                                 </motion.div>
                                 <motion.div variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">✓</span>
+                                    <span className="text-blue-500 text-2xl">✓</span>
                                     <p className="text-gray-700">Inovasi berkelanjutan dalam layanan dan teknologi.</p> {/* Ubah text-gray-200 ke text-gray-700 */}
                                 </motion.div>
                                 <motion.div variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">✓</span>
+                                    <span className="text-blue-500 text-2xl">✓</span>
                                     <p className="text-gray-700">Kepuasan pelanggan sebagai prioritas utama.</p> {/* Ubah text-gray-200 ke text-gray-700 */}
                                 </motion.div>
                             </div>
@@ -92,35 +92,35 @@ const VisiMisiSection: React.FC = () => {
                         <motion.div variants={itemVariants} className="flex items-center justify-center p-8 bg-white rounded-lg shadow-xl border border-gray-200"> {/* Ubah bg dan border */}
                             {/* Menggunakan Ikon koleksi untuk merepresentasikan Misi */}
                             <div className="grid grid-cols-2 grid-rows-2 gap-4">
-                                <IconHeartHandshake size={60} className="text-orange-500" />
-                                <IconLeaf size={60} className="text-orange-500" />
-                                <IconUsers size={60} className="text-orange-500" />
-                                <IconTarget size={60} className="text-orange-500" />
+                                <IconHeartHandshake size={60} className="text-blue-500" />
+                                <IconLeaf size={60} className="text-blue-500" />
+                                <IconUsers size={60} className="text-blue-500" />
+                                <IconTarget size={60} className="text-blue-500" />
                             </div>
                         </motion.div>
                         <motion.div variants={itemVariants} className="text-black"> {/* Ubah text-white ke text-black */}
-                            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-orange-500">
+                            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-blue-500">
                                 Misi
                             </h3>
                             <ul className="list-none space-y-4 text-lg md:text-xl leading-relaxed text-gray-700"> {/* Ubah text-gray-300 ke text-gray-700 */}
                                 <motion.li variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">➔</span>
+                                    <span className="text-blue-500 text-2xl">➔</span>
                                     <p>Menyediakan beragam material bangunan berkualitas tinggi dari pemasok terpercaya.</p>
                                 </motion.li>
                                 <motion.li variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">➔</span>
+                                    <span className="text-blue-500 text-2xl">➔</span>
                                     <p>Memberikan pelayanan pelanggan yang responsif, efisien, dan personal.</p>
                                 </motion.li>
                                 <motion.li variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">➔</span>
+                                    <span className="text-blue-500 text-2xl">➔</span>
                                     <p>Mengembangkan jaringan distribusi yang luas untuk menjangkau seluruh wilayah Indonesia.</p>
                                 </motion.li>
                                 <motion.li variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">➔</span>
+                                    <span className="text-blue-500 text-2xl">➔</span>
                                     <p>Menerapkan praktik bisnis berkelanjutan yang bertanggung jawab terhadap lingkungan dan masyarakat.</p>
                                 </motion.li>
                                 <motion.li variants={itemVariants} className="flex items-start gap-3">
-                                    <span className="text-orange-500 text-2xl">➔</span>
+                                    <span className="text-blue-500 text-2xl">➔</span>
                                     <p>Menciptakan lingkungan kerja yang inovatif dan kolaboratif bagi seluruh karyawan.</p>
                                 </motion.li>
                             </ul>

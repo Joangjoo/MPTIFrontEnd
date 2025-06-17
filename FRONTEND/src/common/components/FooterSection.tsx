@@ -34,23 +34,23 @@ const FooterSection: React.FC = () => {
                 <motion.div {...slideInFromLeft}>
                     <h3 className="font-bold text-lg mb-4 text-white">Hubungi Kami</h3> 
                     <div className="flex items-center mb-2">
-                        <IconMapPin size={20} className="text-orange-500 mr-2" />
+                        <IconMapPin size={20} className="text-blue-500 mr-2" />
                         <p className="text-gray-400">Jl. Lamongan x, Jawa Timur</p> 
                     </div>
                     <div className="flex items-center mb-2">
-                        <IconPhoneCall size={20} className="text-orange-500 mr-2" />
+                        <IconPhoneCall size={20} className="text-blue-500 mr-2" />
                         <p className="text-gray-400">Telepon : xxxxxxxxxxxx</p> 
                     </div>
                      <div className="flex items-center mb-2">
-                        <IconBrandWhatsapp size={20} className="text-orange-500 mr-2" />
+                        <IconBrandWhatsapp size={20} className="text-blue-500 mr-2" />
                         <p className="text-gray-400">WhatsApp: xxxxxxxxxxxxxxxx</p> 
                     </div>
                     <div className="flex items-center">
-                        <IconMail size={20} className="text-orange-500 mr-2" />
+                        <IconMail size={20} className="text-blue-500 mr-2" />
                         <p className="text-gray-400">Email : trijaya@gmail.com</p> 
                     </div>
                     <div className="mt-4">
-                        <a href="#" className="text-orange-500 text-base font-medium hover:underline"> 
+                        <a href="#" className="text-blue-500 text-base font-medium hover:underline"> 
                             Lihat di Peta
                         </a>
                     </div>
@@ -59,11 +59,11 @@ const FooterSection: React.FC = () => {
                 <motion.div {...slideInFromRight}>
                     <h3 className="font-bold text-lg mb-4 text-white">Tautan Cepat</h3>
                     <ul className="space-y-2">
-                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">Tentang Kami</a></li>
-                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">Produk</a></li>
-                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">Layanan</a></li>
-                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">Artikel</a></li>
-                        <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">FAQ</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-blue-500 transition-colors duration-200">Tentang Kami</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-blue-500 transition-colors duration-200">Produk</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-blue-500 transition-colors duration-200">Layanan</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-blue-500 transition-colors duration-200">Artikel</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-blue-500 transition-colors duration-200">FAQ</a></li>
                     </ul>
                 </motion.div>
             </div>

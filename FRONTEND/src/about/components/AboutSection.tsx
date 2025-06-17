@@ -29,7 +29,7 @@ const AboutSection: React.FC = () => {
                 >
                     <p className="text-2xl md:text-3xl font-semibold mb-4 text-black">
                         <motion.span
-                            className="inline-block border-b-2 border-orange-500 pb-1"
+                            className="inline-block border-b-2 border-blue-500 pb-1"
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
                             transition={{ duration: 0.8 }}
@@ -77,7 +77,7 @@ const AboutSection: React.FC = () => {
                         viewport={{ once: true }}
                         className="flex gap-4 mt-8"
                     >
-                        <button className="px-6 py-3 bg-[#1A1A19] hover:bg-[#3F3F44] text-white font-medium rounded-md transition-colors duration-300 shadow-lg hover:shadow-orange-500/20">
+                        <button className="px-6 py-3 bg-[#1A1A19] hover:bg-[#3F3F44] text-white font-medium rounded-md transition-colors duration-300 shadow-lg hover:shadow-blue-500/20">
                             Hubungi Kami
                         </button>
                         <button className="px-6 py-3 border border-[#1A1A19] text-black hover:text-white hover:bg-[#3F3F44] font-medium rounded-md transition-colors duration-300">
@@ -88,7 +88,7 @@ const AboutSection: React.FC = () => {
             </div>
 
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent opacity-20"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent opacity-20"></div>
             </div>
         </section>
     );

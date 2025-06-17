@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => (
                 className="text-center"
             >
                 <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
-                    Tentang <span className="text-orange-500">Kami</span>
+                    Tentang <span className="text-blue-500">Kami</span>
                 </h1>
 
                 <motion.p
@@ -41,13 +41,13 @@ const HeroSection: React.FC = () => (
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ delay: 0.6, duration: 1 }}
-                    className="h-1 bg-orange-500 w-24 mx-auto mb-8"
+                    className="h-1 bg-blue-500 w-24 mx-auto mb-8"
                 />
             </motion.div>
 
             {/* Statistik perusahaan */}
             <motion.div
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto lg:mb-60"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9, duration: 0.8 }}
@@ -63,7 +63,7 @@ const HeroSection: React.FC = () => (
                         whileHover={{ y: -5 }}
                         className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 text-center"
                     >
-                        <p className="text-3xl font-bold text-orange-500 mb-2">{item.value}</p>
+                        <p className="text-3xl font-bold text-blue-500 mb-2">{item.value}</p>
                         <p className="text-white/80">{item.label}</p>
                     </motion.div>
                 ))}

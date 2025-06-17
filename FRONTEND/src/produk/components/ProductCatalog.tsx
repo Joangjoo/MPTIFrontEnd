@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <h3 className="text-xl font-semibold text-black mb-2 line-clamp-2">
                     {product.name}
                 </h3>
-                <p className="text-orange-500 text-lg font-bold mb-3">
+                <p className="text-blue-500 text-lg font-semibold mb-3">
                     {product.price}
                 </p>
                 <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <div className="mt-auto flex flex-col sm:flex-row gap-3">
                     <Link
                         to={`/product/${product.id}`}
-                        className="flex-1 px-4 py-2 bg-orange-500 text-white font-medium rounded-lg text-sm hover:bg-orange-600 transition-colors duration-300 text-center"
+                        className="flex-1 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg text-sm hover:bg-blue-600 transition-colors duration-300 text-center"
                     >
                         Lihat Detail
                     </Link>
@@ -103,7 +103,7 @@ const ProductCatalog: React.FC = () => {
                     transition={{ duration: 0.6 }}
                     className="text-4xl md:text-5xl font-bold text-center mb-12 text-black"
                 >
-                    Katalog <span className="text-orange-500">Produk</span>
+                    Katalog <span className="text-blue-500">Produk</span>
                 </motion.h2>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
