@@ -13,7 +13,7 @@ import WhatsappButton from "./components/WhatsappButton";
 
 const HomeView: React.FC = () => {
   return (
-    <div>
+    <div className="font-Montserrat">
       <Navbar className="mt-6"/>
       <HeroSection />
       <StatsSection />

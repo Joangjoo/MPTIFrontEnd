@@ -21,7 +21,7 @@ const LoginView: React.FC = () => {
 
     return (
         <div
-            className="relative min-h-screen flex" 
+            className="relative min-h-screen flex " 
             style={{
                 backgroundImage: 'url(/logo/loginBg.png)', 
                 backgroundSize: 'cover',

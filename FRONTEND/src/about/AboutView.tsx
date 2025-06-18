@@ -10,7 +10,7 @@ import VisiMisiSection from "./components/VisiMisiSection";
 const AboutView: React.FC = () => {
 
     return (
-        <div>
+        <div className="font-Montserrat">
             <Navbar className="mt-6"/> 
             <HeroSection />
             <AboutSection />

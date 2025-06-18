@@ -112,7 +112,7 @@ const ProductDetailPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="py-10 px-4 md:px-8 lg:px-16 bg-gradient-to-r from-[#002C7400] to-[#0260FD4D] min-h-screen"
+            className="py-10 px-4 md:px-8 lg:px-16 bg-gradient-to-r from-[#002C7400] to-[#0260FD4D] font-Montserrat min-h-screen"
         >
             {/* Breadcrumb */}
             <div className="flex items-center text-sm text-gray-500 mb-6">

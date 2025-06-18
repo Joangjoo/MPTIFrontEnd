@@ -11,11 +11,13 @@ import ProductCatalog from "../components/ProductCatalog";
 const ProductView: React.FC = () => {
     return (
         <>
+        <div className="font-Montserrat">
             <Navbar className="mt-6" />
             <ProductHeroSection />
             <ProductCatalog />
             <FooterSection />
             <WhatsappButton />
+        </div>
         </>
     )
 }

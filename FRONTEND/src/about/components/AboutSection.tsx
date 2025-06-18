@@ -47,7 +47,7 @@ const AboutSection: React.FC = () => {
                             transition={{ duration: 0.5, delay: 0.4 }}
                             viewport={{ once: true }}
                         >
-                            "Bangun Lebih Mudah
+                            Bangun Lebih Mudah
                         </motion.span>
                         <br />
                         <motion.span
@@ -56,7 +56,7 @@ const AboutSection: React.FC = () => {
                             transition={{ duration: 0.5, delay: 0.6 }}
                             viewport={{ once: true }}
                         >
-                            Belanja Lebih Cepat"
+                            Belanja Lebih Cepat
                         </motion.span>
                     </h2>
 

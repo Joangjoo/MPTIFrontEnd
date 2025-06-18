@@ -1,4 +1,3 @@
-// src/common/components/Navbar.tsx
 "use client";
 import { cn } from "../../lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
@@ -10,16 +9,10 @@ import {
 } from "framer-motion";
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import ShoppingCartIcon from '../../produk/components/ShoppingCartIcon'; 
 
-// IMPORT ShoppingCartIcon
-import ShoppingCartIcon from '../../produk/components/ShoppingCartIcon'; // <--- PASTIKAN PATH INI BENAR!
-// Import type Variants
-
-// ===============================================================
-// DEFINISI INTERFACE (TIDAK ADA PERUBAHAN BESAR PADA INTERFACE)
-// ===============================================================
 interface NavbarProps {
-  className?: string; // Hapus children di sini, Navbar akan render isinya sendiri
+  className?: string; 
 }
 
 interface NavBodyProps {
@@ -54,20 +47,14 @@ interface MobileNavMenuProps {
   isOpen: boolean;
 }
 
-
-// ===============================================================
-// KOMPONEN-KOMPONEN EKSPOR (TETAP SAMA, KECUALI YANG UTAMA)
-// ===============================================================
-// Ini adalah komponen Navbar UTAMA yang akan diekspor default atau named export
-// Dan akan merender semua komponen internalnya seperti NavBody, MobileNav, dll.
-export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari props Navbar
+export const Navbar = ({ className }: NavbarProps) => { 
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
   const [visible, setVisible] = useState<boolean>(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // <--- DEKLARASI STATE DI SINI
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
@@ -77,14 +64,8 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
     }
   });
 
-  // State untuk menghitung item di keranjang (simulasi)
-  const [cartItemCount] = useState(0); // <--- DEKLARASI STATE KERANJANG DI SINI
+  const [cartItemCount] = useState(0); 
 
-  // Fungsi untuk menambah item (contoh, bisa dipanggil dari ProductDetailPage nanti)
-
-
-  // Anda bisa menambahkan useEffect untuk global state management jika diperlukan
-  // Misalnya: React.useEffect(() => { /* subscribe to cart store */ }, []);
 
   return (
     <motion.div
@@ -102,7 +83,6 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
           ]}
         />
         <div className="ml-auto flex items-center gap-4">
-          {/* ShoppingCartIcon menggunakan cartItemCount dari state internal Navbar */}
           <ShoppingCartIcon itemCount={cartItemCount} />
           <NavbarButton href="#" variant="text">
             Hubungi Kami
@@ -115,7 +95,6 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
         <MobileNavHeader>
           <NavbarLogo />
           <div className="flex items-center gap-4">
-            {/* ShoppingCartIcon menggunakan cartItemCount dari state internal Navbar */}
             <ShoppingCartIcon itemCount={cartItemCount} />
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
@@ -134,7 +113,7 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
               key={index}
               to={item.link}
               className="w-full px-4 py-3 text-black dark:text-white"
-              onClick={() => setIsMobileMenuOpen(false)} // Tutup menu saat klik
+              onClick={() => setIsMobileMenuOpen(false)} 
             >
               {item.name}
             </Link>
@@ -143,7 +122,7 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
             href="#"
             className="w-full mt-4 font-bold"
             variant="text"
-            onClick={() => setIsMobileMenuOpen(false)} // Tutup menu saat klik
+            onClick={() => setIsMobileMenuOpen(false)} 
           >
             Hubungi Kami
           </NavbarButton>
@@ -153,10 +132,6 @@ export const Navbar = ({ className }: NavbarProps) => { // Hapus 'children' dari
   );
 };
 
-// ===============================================================
-// KOMPONEN-KOMPONEN EKSPOR LAINNYA (TETAP SAMA)
-// ===============================================================
-// Pastikan semua komponen ini juga di-export
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   return (
     <motion.div
@@ -165,7 +140,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "90%" : "100%",
+        width: visible ? "80%" : "60%",
         y: visible ? 20 : 0,
       }}
       transition={{
