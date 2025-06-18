@@ -105,7 +105,7 @@ const ProductCatalog: React.FC = () => {
                 >
                     Katalog <span className="text-blue-500">Produk</span>
                 </motion.h2>
-                <motion.div
+                <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
@@ -117,7 +117,7 @@ const ProductCatalog: React.FC = () => {
                             <input
                                 type="text"
                                 placeholder="Cari produk..."
-                                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black"
+                                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -125,7 +125,7 @@ const ProductCatalog: React.FC = () => {
                         <div className="relative w-full md:w-auto">
                             <IconAdjustmentsHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <select
-                                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none bg-white text-black"
+                                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white text-black"
                                 value={selectedCategory}
                                 onChange={(e) => setSelectedCategory(e.target.value)}
                             >

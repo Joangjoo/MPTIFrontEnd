@@ -3,6 +3,7 @@ import HomeView from "./home/HomeView";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductView from "./produk/pages/ProductView";
 import ProductDetailPage from "./produk/pages/ProductDetailPage";
+import LoginView from "./login/LoginView";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/about" element={<AboutView />} />
         <Route path="/products" element={<ProductView />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/login" element={<LoginView/>}/>
       </Routes>
     </Router>
   );
