@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, easeOut } from 'framer-motion';
 import { IconSearch, IconAdjustmentsHorizontal, IconShoppingCartPlus } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { products, categories } from '../../data/ProductsData'; 
 interface ProductCardProps {
@@ -14,6 +14,11 @@ interface ProductCardProps {
         category: string;
         details: string;
     };
+    isAuthenticated: boolean;
+}
+
+interface ProductCatalogProps {
+    isAuthenticated: boolean;
 }
 
 const cardVariants = {
@@ -21,7 +26,18 @@ const cardVariants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, isAuthenticated  }) => {
+    const navigate = useNavigate();
+
+    const handleAddToCart = () => {
+        if (!isAuthenticated) {
+            navigate('/login'); 
+            alert('Anda harus login untuk menambahkan produk ke keranjang!'); 
+            return;
+        }
+        console.log(`Produk "${product.name}" (ID: ${product.id}) sebanyak 1 ditambahkan ke keranjang.`);
+        alert(`Produk "${product.name}" berhasil ditambahkan ke keranjang!`); 
+    };
     return (
         <motion.div
             variants={cardVariants}
@@ -53,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     </Link>
                     <button
                         className="flex-1 px-4 py-2 border border-gray-300 text-gray-800 font-medium rounded-lg text-sm hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center gap-1"
-                        onClick={() => alert(`Menambahkan ${product.name} ke keranjang!`)}
+                        onClick={handleAddToCart}
                     >
                         <IconShoppingCartPlus size={18} /> Tambah
                     </button>
@@ -63,7 +79,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     );
 };
 
-const ProductCatalog: React.FC = () => {
+const ProductCatalog: React.FC<ProductCatalogProps> = ({isAuthenticated}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Semua');
 
@@ -148,7 +164,7 @@ const ProductCatalog: React.FC = () => {
                 >
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <ProductCard key={product.id} product={product} />
+                            <ProductCard key={product.id} product={product} isAuthenticated = {isAuthenticated}/>
                         ))
                     ) : (
                         <motion.p

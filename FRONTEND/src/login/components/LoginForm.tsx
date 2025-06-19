@@ -1,21 +1,38 @@
 import React, { useState } from 'react';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
+import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
+  onLoginSuccess: (token: string, user: User | null) => void;
+  showNotification: (message: string, type: 'success' | 'error' | 'info' | 'warning') => void;
 }
 
 interface LoginFormData {
-  username: string;
+  email: string;
   password: string;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLoginSuccess, showNotification }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<LoginFormData>({
-    username: '',
+    email: '',
     password: ''
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  
+  // const navigate = useNavigate(); 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,10 +42,49 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login data:', formData);
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/login', {
+        email: formData.email,
+        password: formData.password
+      }, {
+        headers: { 'Accept': 'application/json' }
+      });
+
+      const data = response.data;
+
+      if (data.user && data.user.token) {
+        localStorage.setItem('access_token', data.user.token);
+        localStorage.setItem('user_data', JSON.stringify(data.user));
+        onLoginSuccess(data.user.token, data.user); 
+      } else {
+        showNotification('Login berhasil, tetapi token tidak ditemukan. Mohon hubungi admin.', 'error');
+      }
+
+    } catch (error) { 
+      if (axios.isAxiosError(error) && error.response) {
+        let errorMessage = 'Login gagal. Silakan coba lagi.';
+        const responseData = error.response.data;
+
+        if (responseData.message) {
+          errorMessage = responseData.message;
+        } else if (responseData.errors) {
+          errorMessage = Object.values(responseData.errors).flat().join('\n');
+        } else if (error.response.status === 401) {
+            errorMessage = 'Email atau kata sandi salah.';
+        }
+        showNotification(errorMessage, 'error'); 
+        console.error('Login Gagal (Server Response):', responseData);
+      } else {
+        showNotification('Tidak dapat terhubung ke server. Periksa koneksi Anda.', 'error'); 
+        console.error('Network or Other Error:', error);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -42,10 +98,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <input
-            type="text"
-            name="username"
-            placeholder="Nama Pengguna"
-            value={formData.username}
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
             onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
             required
@@ -80,8 +136,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+          disabled={loading}
         >
-          Masuk
+          {loading ? 'Memuat...' : 'Masuk'}
         </button>
       </form>
       

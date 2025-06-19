@@ -8,11 +8,14 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import ShoppingCartIcon from '../../produk/components/ShoppingCartIcon'; 
+import { Link, useNavigate, type NavigateFunction } from "react-router-dom";
+// import ShoppingCartIcon from '../../produk/components/ShoppingCartIcon'; 
+
 
 interface NavbarProps {
-  className?: string; 
+  className?: string;
+  isAuthenticated: boolean;
+  onLogout: (navigateFunc: NavigateFunction) => void;
 }
 
 interface NavBodyProps {
@@ -47,14 +50,15 @@ interface MobileNavMenuProps {
   isOpen: boolean;
 }
 
-export const Navbar = ({ className }: NavbarProps) => { 
+export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
   const [visible, setVisible] = useState<boolean>(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
@@ -64,13 +68,12 @@ export const Navbar = ({ className }: NavbarProps) => {
     }
   });
 
-  const [cartItemCount] = useState(0); 
-
+  // const [cartItemCount] = useState(0); 
 
   return (
     <motion.div
       ref={ref}
-      className={cn("fixed inset-x-0 top-0 z-40 w-full", className)}
+      className={cn("fixed inset-x-0 top-5 z-40 w-full", className)}
     >
       {/* Desktop Navbar */}
       <NavBody visible={visible} className="px-10">
@@ -83,7 +86,16 @@ export const Navbar = ({ className }: NavbarProps) => {
           ]}
         />
         <div className="ml-auto flex items-center gap-4">
-          <ShoppingCartIcon itemCount={cartItemCount} />
+          {/* <ShoppingCartIcon itemCount={cartItemCount} /> */}
+          {isAuthenticated ? (
+            <NavbarButton onClick={() => onLogout(navigate)} variant="text"> 
+              Logout
+            </NavbarButton>
+          ) : (
+            <NavbarButton href="/login" variant="text"> 
+              Login
+            </NavbarButton>
+          )}
           <NavbarButton href="#" variant="text">
             Hubungi Kami
           </NavbarButton>
@@ -95,7 +107,7 @@ export const Navbar = ({ className }: NavbarProps) => {
         <MobileNavHeader>
           <NavbarLogo />
           <div className="flex items-center gap-4">
-            <ShoppingCartIcon itemCount={cartItemCount} />
+            {/* <ShoppingCartIcon itemCount={cartItemCount} /> */}
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -113,16 +125,34 @@ export const Navbar = ({ className }: NavbarProps) => {
               key={index}
               to={item.link}
               className="w-full px-4 py-3 text-black dark:text-white"
-              onClick={() => setIsMobileMenuOpen(false)} 
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
             </Link>
           ))}
+          {isAuthenticated ? (
+            <NavbarButton
+              onClick={() => { onLogout(navigate); setIsMobileMenuOpen(false); }}
+              className="w-full mt-4 font-bold"
+              variant="text"
+            >
+              Logout
+            </NavbarButton>
+          ) : (
+            <NavbarButton
+              href="/login"
+              className="w-full mt-4 font-bold"
+              variant="text"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Login
+            </NavbarButton>
+          )}
           <NavbarButton
             href="#"
             className="w-full mt-4 font-bold"
             variant="text"
-            onClick={() => setIsMobileMenuOpen(false)} 
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             Hubungi Kami
           </NavbarButton>

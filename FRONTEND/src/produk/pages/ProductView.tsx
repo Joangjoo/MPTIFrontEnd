@@ -1,20 +1,20 @@
 import React from "react";
-import {
-    Navbar
-} from "../../common/components/Navbar";
 import FooterSection from "../../common/components/FooterSection";
 import WhatsappButton from "../../home/components/WhatsappButton";
 import ProductHeroSection from "../components/ProductHeroSection";
 import ProductCatalog from "../components/ProductCatalog";
 
+interface ProductViewProps{
+    isAuthenticated : boolean;
+}
 
-const ProductView: React.FC = () => {
+
+const ProductView: React.FC<ProductViewProps> = ({ isAuthenticated }) => {
     return (
         <>
         <div className="font-Montserrat">
-            <Navbar className="mt-6" />
             <ProductHeroSection />
-            <ProductCatalog />
+            <ProductCatalog isAuthenticated = {isAuthenticated} />
             <FooterSection />
             <WhatsappButton />
         </div>

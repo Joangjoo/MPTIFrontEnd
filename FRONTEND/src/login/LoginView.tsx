@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, easeOut, easeIn } from 'framer-motion';
 import { IconBuilding } from '@tabler/icons-react'; 
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
+import LoginForm, {type User} from './components/LoginForm'; 
+import RegisterForm from './components/RegisterForm'; 
+import { useNavigate } from 'react-router-dom';
 
-const LoginView: React.FC = () => {
+
+interface LoginViewProps {
+  onLoginSuccess: (token: string, user: User | null) => void;
+  showNotification: (message: string, type: 'success' | 'error' | 'info' | 'warning') => void;
+}
+
+const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, showNotification }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [activeTab, setActiveTab] = useState('login'); 
+    const navigate = useNavigate(); 
 
     const formVariants = {
         hidden: { opacity: 0, x: isLogin ? -50 : 50, scale: 0.95 },
@@ -14,9 +22,22 @@ const LoginView: React.FC = () => {
         exit: { opacity: 0, x: isLogin ? 50 : -50, scale: 0.95, transition: { duration: 0.4, ease: easeIn } }
     };
 
-    const handleTabClick = (tab: string) => {
+    const handleTabClick = (tab: string) => { 
         setActiveTab(tab);
         setIsLogin(tab === 'login'); 
+    };
+
+    const handleLoginFormSuccess = (token: string, user: User | null) => {
+        onLoginSuccess(token, user); 
+        showNotification(`Selamat datang kembali, ${user?.name || 'Pengguna'}!`, 'success');
+        navigate('/'); 
+    };
+
+    const handleRegisterSuccess = (token: string | null, user: User | null) => {
+        console.log('Registrasi berhasil di LoginView!', { token, user });
+        showNotification('Akun Anda berhasil didaftarkan! Silakan login.', 'success');
+        setIsLogin(true);
+        setActiveTab('login');
     };
 
     return (
@@ -40,8 +61,6 @@ const LoginView: React.FC = () => {
                     top: 0,
                 }}
             >
-
-                
                 <div className="h-full flex flex-col justify-between items-start pt-8 pb-16 px-10">
                     <div className="relative mt-56 mb-20 ml-8 w-full ">
                         <motion.div
@@ -75,7 +94,7 @@ const LoginView: React.FC = () => {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <div className="text-4xl font-bold ml-36">Masuk</div>
+                            <div className="text-4xl font-bold ml-36">Daftar</div>
                         </motion.button>
                     </div>
                 </div>
@@ -113,10 +132,14 @@ const LoginView: React.FC = () => {
                                     animate="visible"
                                     exit="exit"
                                 >
-                                    <LoginForm onSwitchToRegister={() => {
-                                        setIsLogin(false);
-                                        setActiveTab('signin');
-                                    }} />
+                                    <LoginForm 
+                                        onSwitchToRegister={() => {
+                                            setIsLogin(false);
+                                            setActiveTab('signin');
+                                        }} 
+                                        onLoginSuccess={handleLoginFormSuccess} 
+                                        showNotification={showNotification} 
+                                    />
                                 </motion.div>
                             ) : (
                                 <motion.div
@@ -129,7 +152,10 @@ const LoginView: React.FC = () => {
                                     <RegisterForm onSwitchToLogin={() => {
                                         setIsLogin(true);
                                         setActiveTab('login');
-                                    }} />
+                                    }} 
+                                    onRegisterSuccess={handleRegisterSuccess} 
+                                    showNotification={showNotification} 
+                                    />
                                 </motion.div>
                             )}
                         </AnimatePresence>

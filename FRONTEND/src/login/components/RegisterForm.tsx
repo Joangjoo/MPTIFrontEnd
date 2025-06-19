@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
+import axios from 'axios'; 
+import { type User } from './LoginForm'; 
 
 interface RegisterFormProps {
   onSwitchToLogin: () => void;
+  showNotification: (message: string, type: 'success' | 'error' | 'info' | 'warning') => void;
+  onRegisterSuccess: (token: string | null, user: User | null) => void; 
 }
 
 interface RegisterFormData {
-  fullName: string;
+  name: string; 
   email: string;
   password: string;
-  confirmPassword: string;
+  password_confirmation: string; 
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, showNotification, onRegisterSuccess }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<RegisterFormData>({
-    fullName: '',
+    name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    password_confirmation: ''
   });
+  const [loading, setLoading] = useState<boolean>(false); 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,17 +35,60 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
-    
-    // Basic validation
-    if (formData.password !== formData.confirmPassword) {
-      alert('Kata sandi tidak cocok!');
+    setLoading(true); 
+
+    if (formData.password !== formData.password_confirmation) {
+      showNotification('Kata sandi dan konfirmasi kata sandi tidak cocok!', 'error');
+      setLoading(false); 
       return;
     }
     
-    // Handle registration logic here
-    console.log('Register data:', formData);
+    try {
+      const response = await axios.post('http://localhost:8000/api/register', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        password_confirmation: formData.password_confirmation,
+      }, {
+        headers: { 'Accept': 'application/json' }
+      });
+
+      const data = response.data; 
+
+      console.log('Registrasi Sukses:', data);
+
+      if (data.user && data.user.token) {
+        localStorage.setItem('access_token', data.user.token);
+        localStorage.setItem('user_data', JSON.stringify(data.user));
+        showNotification('Registrasi berhasil! Anda telah login.', 'success');
+        onRegisterSuccess(data.user.token, data.user); 
+      } else {
+        showNotification('Registrasi berhasil! Silakan login untuk melanjutkan.', 'success');
+        onRegisterSuccess(null, null); 
+        onSwitchToLogin(); 
+      }
+      
+    } catch (error) { 
+      if (axios.isAxiosError(error) && error.response) {
+        let errorMessage = 'Registrasi gagal. Silakan coba lagi.';
+        const responseData = error.response.data;
+
+        if (responseData.message) {
+          errorMessage = responseData.message;
+        } else if (responseData.errors) {
+          errorMessage = Object.values(responseData.errors).flat().join('\n');
+        }
+        showNotification(errorMessage, 'error'); 
+        console.error('Register Gagal (Server Response):', responseData);
+      } else {
+        showNotification('Tidak dapat terhubung ke server. Periksa koneksi Anda.', 'error'); 
+        console.error('Network or Other Error:', error);
+      }
+    } finally {
+      setLoading(false); 
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -59,9 +107,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
         <div>
           <input
             type="text"
-            name="fullName"
+            name="name" 
             placeholder="Nama Lengkap"
-            value={formData.fullName}
+            value={formData.name} 
             onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
             required
@@ -102,9 +150,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
         <div className="relative">
           <input
             type={showConfirmPassword ? "text" : "password"}
-            name="confirmPassword"
+            name="password_confirmation" 
             placeholder="Konfirmasi Kata Sandi"
-            value={formData.confirmPassword}
+            value={formData.password_confirmation} 
             onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors pr-12"
             required
@@ -140,8 +188,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+          disabled={loading} 
         >
-          Daftar Sekarang
+          {loading ? 'Memuat...' : 'Daftar Sekarang'} 
         </button>
       </form>
       

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion'; 
 import { 
     IconArrowLeft, 
     IconShoppingCartPlus, 
@@ -14,23 +14,30 @@ import {
     IconRefresh,
     IconMinus,
     IconPlus,
-    IconZoomIn
+    IconZoomIn,
+    IconX 
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { products } from '../../data/ProductsData';
 
-const ProductDetailPage: React.FC = () => {
+interface ProductDetailPageProps {
+    isAuthenticated: boolean;
+}
+
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ isAuthenticated }) => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+
     const [quantity, setQuantity] = useState(1);
-    const [isWishlisted, setIsWishlisted] = useState(false);
-    const [showImageModal, setShowImageModal] = useState(false);
-    const [activeTab, setActiveTab] = useState('description');
+    const [isWishlisted, setIsWishlisted] = useState(false); 
+    const [showImageModal, setShowImageModal] = useState(false); 
+    const [activeTab, setActiveTab] = useState('description'); 
 
     if (!id) {
         return (
             <div className="py-10 px-4 md:px-8 lg:px-16">
-                <Link to="/products" className="inline-flex items-center text-[#0260FD99] hover:text-blue-700  transition-colors duration-300 mb-4">
+                <Link to="/products" className="inline-flex items-center text-[#0260FD99] hover:text-blue-700 transition-colors duration-300 mb-4">
                     <IconArrowLeft className="mr-2" size={20} /> Kembali ke Katalog
                 </Link>
                 <div className="text-center text-gray-600 py-20">
@@ -56,12 +63,17 @@ const ProductDetailPage: React.FC = () => {
         );
     }
 
-
-    const rating = 4.5;
-    const reviewCount = 127;
+    const rating = 4.5; 
+    const reviewCount = 127; 
 
     const handleAddToCart = () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            alert('Anda harus login untuk menambahkan produk ke keranjang!');
+            return;
+        }
         console.log(`Produk "${product.name}" sebanyak ${quantity} ditambahkan ke keranjang.`);
+        alert(`Produk "${product.name}" berhasil ditambahkan ke keranjang!`);
     };
 
     const handleQuantityChange = (type: 'increase' | 'decrease') => {
@@ -138,14 +150,12 @@ const ProductDetailPage: React.FC = () => {
                                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 border-4 rounded-2xl border-[#0260FD99]" 
                             />
                             <button
-                                onClick={() => setShowImageModal(true)}
+                                onClick={() => setShowImageModal(true)} 
                                 className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                             >
                                 <IconZoomIn size={20} className="text-gray-700" />
                             </button>
                         </div>
-                        
-                        
                     </div>
 
                     {/* Detail Produk */}
@@ -155,15 +165,15 @@ const ProductDetailPage: React.FC = () => {
                                 <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
                                 <div className="flex space-x-2">
                                     <button
-                                        onClick={() => setIsWishlisted(!isWishlisted)}
+                                        onClick={() => setIsWishlisted(!isWishlisted)} 
                                         className={`p-2 rounded-full transition-colors ${
                                             isWishlisted ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-400'
                                         }`}
                                     >
-                                        <IconHeart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
+                                        <IconHeart size={20} fill={isWishlisted ? 'currentColor' : 'none'} /> {/* Menggunakan isWishlisted */}
                                     </button>
                                     <button
-                                        onClick={handleShare}
+                                        onClick={handleShare} 
                                         className="p-2 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors"
                                     >
                                         <IconShare size={20} />
@@ -173,9 +183,9 @@ const ProductDetailPage: React.FC = () => {
                             
                             <div className="flex items-center space-x-4 mb-4">
                                 <div className="flex items-center space-x-1">
-                                    {renderStars(rating)}
+                                    {renderStars(rating)} {/* Menggunakan renderStars dan rating */}
                                 </div>
-                                <span className="text-sm text-gray-600">({reviewCount} ulasan)</span>
+                                <span className="text-sm text-gray-600">({reviewCount} ulasan)</span> {/* Menggunakan reviewCount */}
                                 <div className="flex items-center">
                                     <IconTag className="text-gray-400 mr-1" size={14} />
                                     <span className="text-sm text-gray-600">{product.category}</span>
@@ -193,15 +203,15 @@ const ProductDetailPage: React.FC = () => {
                             <span className="text-gray-700 font-medium">Jumlah:</span>
                             <div className="flex items-center border border-gray-300 rounded-lg">
                                 <button
-                                    onClick={() => handleQuantityChange('decrease')}
+                                    onClick={() => handleQuantityChange('decrease')} 
                                     className="p-2 hover:bg-gray-100 transition-colors"
-                                    disabled={quantity <= 1}
+                                    disabled={quantity <= 1} 
                                 >
                                     <IconMinus size={16} />
                                 </button>
-                                <span className="px-4 py-2 font-medium">{quantity}</span>
+                                <span className="px-4 py-2 font-medium">{quantity}</span> {/* Menggunakan quantity */}
                                 <button
-                                    onClick={() => handleQuantityChange('increase')}
+                                    onClick={() => handleQuantityChange('increase')} // Menggunakan handleQuantityChange
                                     className="p-2 hover:bg-gray-100 transition-colors"
                                 >
                                     <IconPlus size={16} />
@@ -212,7 +222,7 @@ const ProductDetailPage: React.FC = () => {
                         {/* Action Buttons */}
                         <div className="space-y-3">
                             <button
-                                onClick={handleAddToCart}
+                                onClick={handleAddToCart} 
                                 className="w-full bg-[#2e74ee] hover:bg-[#0260FD] text-white font-semibold py-4 px-6 rounded-lg shadow-md transition-colors duration-300 flex items-center justify-center gap-2"
                             >
                                 <IconShoppingCartPlus size={20} /> 
@@ -247,7 +257,7 @@ const ProductDetailPage: React.FC = () => {
                         {['description', 'details', 'reviews'].map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setActiveTab(tab)}
+                                onClick={() => setActiveTab(tab)} 
                                 className={`px-6 py-4 text-sm font-medium transition-colors ${
                                     activeTab === tab 
                                         ? 'text-blue-600 border-b-2 border-blue-600' 
@@ -262,13 +272,13 @@ const ProductDetailPage: React.FC = () => {
                     </div>
 
                     <div className="p-8">
-                        {activeTab === 'description' && (
+                        {activeTab === 'description' && ( 
                             <div className="prose max-w-none">
                                 <p className="text-gray-700 leading-relaxed">{product.description}</p>
                             </div>
                         )}
 
-                        {activeTab === 'details' && product.details && (
+                        {activeTab === 'details' && product.details && ( 
                             <div>
                                 <ul className="space-y-2">
                                     {product.details.split(', ').map((detail, index) => (
@@ -281,15 +291,15 @@ const ProductDetailPage: React.FC = () => {
                             </div>
                         )}
 
-                        {activeTab === 'reviews' && (
+                        {activeTab === 'reviews' && ( 
                             <div className="space-y-6">
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <div className="flex items-center space-x-2">
-                                            <span className="text-2xl font-bold">{rating}</span>
-                                            <div className="flex">{renderStars(rating)}</div>
+                                            <span className="text-2xl font-bold">{rating}</span> {/* Menggunakan rating */}
+                                            <div className="flex">{renderStars(rating)}</div> {/* Menggunakan renderStars */}
                                         </div>
-                                        <p className="text-sm text-gray-600">{reviewCount} ulasan</p>
+                                        <p className="text-sm text-gray-600">{reviewCount} ulasan</p> {/* Menggunakan reviewCount */}
                                     </div>
                                     <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                                         Tulis Ulasan
@@ -321,29 +331,31 @@ const ProductDetailPage: React.FC = () => {
             </div>
 
             {/* Image Modal */}
-            {showImageModal && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
-                    onClick={() => setShowImageModal(false)}
-                >
-                    <div className="relative max-w-4xl max-h-full">
-                        <img 
-                            src={product.image} 
-                            alt={product.name}
-                            className="max-w-full max-h-full object-contain"
-                        />
-                        <button
-                            onClick={() => setShowImageModal(false)}
-                            className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2"
-                        >
-                            <IconArrowLeft size={20} className="rotate-45" />
-                        </button>
-                    </div>
-                </motion.div>
-            )}
+            <AnimatePresence> {/* Tambahkan AnimatePresence di sini */}
+                {showImageModal && ( 
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+                        onClick={() => setShowImageModal(false)} 
+                    >
+                        <div className="relative max-w-4xl max-h-full" onClick={(e) => e.stopPropagation()}> 
+                            <img 
+                                src={product.image} 
+                                alt={product.name}
+                                className="max-w-full max-h-full object-contain"
+                            />
+                            <button
+                                onClick={() => setShowImageModal(false)} 
+                                className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2"
+                            >
+                                <IconX size={20} className="text-gray-700" /> 
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };

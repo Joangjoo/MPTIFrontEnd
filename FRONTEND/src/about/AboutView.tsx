@@ -1,5 +1,4 @@
 import React from "react"; 
-import {Navbar,} from "../common/components/Navbar";
 import HeroSection from "./components/HeroSection";
 import FooterSection from "../common/components/FooterSection";
 import WhatsappButton from "../home/components/WhatsappButton";
@@ -11,7 +10,6 @@ const AboutView: React.FC = () => {
 
     return (
         <div className="font-Montserrat">
-            <Navbar className="mt-6"/> 
             <HeroSection />
             <AboutSection />
             <JourneySection />
