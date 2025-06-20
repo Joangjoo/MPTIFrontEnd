@@ -36,11 +36,12 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose, dur
   return (
     <AnimatePresence>
       <motion.div
+        // 2. Kembalikan animasi slide dari atas
         initial={{ opacity: 0, y: -50, x: "-50%" }}
         animate={{ opacity: 1, y: 0, x: "-50%" }}
         exit={{ opacity: 0, y: -50, x: "-50%" }}
         transition={{ duration: 0.3 }}
-        className={`fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white text-base flex items-center justify-center space-x-3 z-50 border-l-4 ${notificationStyles[type]} cursor-pointer`}
+        className={`fixed top-32 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white text-base flex items-center justify-center space-x-3 z-50 border-l-4 ${notificationStyles[type]} cursor-pointer`}
         onClick={onClose}
       >
         {iconMap[type]}

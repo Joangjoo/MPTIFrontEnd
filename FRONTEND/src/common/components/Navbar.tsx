@@ -58,6 +58,7 @@ export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) =>
   });
   const [visible, setVisible] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedMobileItem, setSelectedMobileItem] = useState<number>(0);
   const navigate = useNavigate();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -73,7 +74,7 @@ export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) =>
   return (
     <motion.div
       ref={ref}
-      className={cn("fixed inset-x-0 top-5 z-40 w-full", className)}
+      className={cn("fixed inset-x-0 top-5 z-40 w-full ", className)}
     >
       {/* Desktop Navbar */}
       <NavBody visible={visible} className="px-10">
@@ -88,11 +89,11 @@ export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) =>
         <div className="ml-auto flex items-center gap-4">
           {/* <ShoppingCartIcon itemCount={cartItemCount} /> */}
           {isAuthenticated ? (
-            <NavbarButton onClick={() => onLogout(navigate)} variant="text"> 
+            <NavbarButton onClick={() => onLogout(navigate)} variant="text">
               Logout
             </NavbarButton>
           ) : (
-            <NavbarButton href="/login" variant="text"> 
+            <NavbarButton href="/login" variant="text">
               Login
             </NavbarButton>
           )}
@@ -106,7 +107,7 @@ export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) =>
       <MobileNav visible={visible}>
         <MobileNavHeader>
           <NavbarLogo />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ">
             {/* <ShoppingCartIcon itemCount={cartItemCount} /> */}
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
@@ -124,10 +125,19 @@ export const Navbar = ({ className, isAuthenticated, onLogout }: NavbarProps) =>
             <Link
               key={index}
               to={item.link}
-              className="w-full px-4 py-3 text-black dark:text-white"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {item.name}
+              className={`relative w-full px-4 py-3 text-black  text-center transition-colors duration-200 ${
+                selectedMobileItem === index ? "text-white" : "text-black"
+              }`}
+              onClick={() => {
+                setSelectedMobileItem(index); 
+              }}
+            >{selectedMobileItem === index && (
+              <motion.div
+                layoutId="selected-mobile-item" 
+                className="absolute inset-0 h-full w-full rounded-lg bg-black  -z-10 "
+              />
+            )}
+              <span className="relative">{item.name}</span>
             </Link>
           ))}
           {isAuthenticated ? (
@@ -239,7 +249,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "4px" : "2rem",
+        borderRadius: visible ? "2rem" : "2rem",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -248,8 +258,8 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
-        visible && "bg-white/80 dark:bg-neutral-950/80",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-white/80 px-0 py-2 lg:hidden",
+        visible && "bg-white/80 ",
         className
       )}
     >
@@ -287,7 +297,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           className={cn(
-            "absolute inset-x-0 top-full z-50 flex w-full flex-col items-start justify-start gap-4 overflow-hidden rounded-lg bg-white px-4 py-4 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
+            "absolute inset-x-0 top-full z-50 flex w-full flex-col items-start justify-start gap-4 overflow-hidden rounded-lg bg-white/80 px-4 py-4 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] ",
             className
           )}
         >
@@ -307,13 +317,13 @@ export const MobileNavToggle = ({
 }) => {
   return isOpen ? (
     <IconX
-      className="text-black dark:text-white"
+      className="text-black"
       onClick={onClick}
       size={24}
     />
   ) : (
     <IconMenu2
-      className="text-black dark:text-white"
+      className="text-black "
       onClick={onClick}
       size={24}
     />
@@ -326,7 +336,7 @@ export const NavbarLogo = () => {
       to="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
-      <span className="font-medium text-black dark:text-white">Startup</span>
+      <span className="font-medium text-blue-600 ">TriJaya Agung</span>
     </Link>
   );
 };
